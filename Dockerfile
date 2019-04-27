@@ -17,13 +17,15 @@ VOLUME ["/data"]
 
 WORKDIR /bedrock-server
 
+# Perform all commands in one RUN
+# Make scripts executable
+RUN find . -name '*.sh' -type f -maxdepth 1 | xargs chmod +x && \
 # Create symlinks to behaviour & resource packs and world data
-RUN ln -s /data/behavior_packs behavior_packs && \
+    ln -s /data/behavior_packs behavior_packs && \
     ln -s /data/resource_packs resource_packs && \
-    ln -s /data/worlds worlds
-
+    ln -s /data/worlds worlds && \
 # Create symlinks to mounted config files
-RUN mkdir tmp && \
+    mkdir tmp && \
     mv -t tmp/ permissions.json server.properties whitelist.json && \ 
     ln -sfb /data/config/permissions.json permissions.json && \
     ln -sfb /data/config/server.properties server.properties && \
