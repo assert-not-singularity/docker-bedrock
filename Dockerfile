@@ -4,7 +4,7 @@ LABEL maintainer="github.com/assert-not-singularity"
 
 # Download packages and server binaries
 RUN apt-get update && apt-get install -y libcurl4 libssl1.1 nano tzdata unzip wget
-RUN wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.11.0.23.zip -qO bedrock-server.zip
+RUN wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.11.4.2.zip -qO bedrock-server.zip
 RUN unzip bedrock-server.zip -d /bedrock-server && rm bedrock-server.zip
 
 # Set standard timezone
