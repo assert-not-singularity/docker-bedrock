@@ -3,9 +3,20 @@ FROM ubuntu:latest
 LABEL maintainer="github.com/assert-not-singularity"
 
 # Download packages and server binaries
-RUN apt-get update && apt-get install -y libcurl4 libssl1.1 nano tzdata unzip wget
-RUN wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.11.4.2.zip -qO bedrock-server.zip
-RUN unzip bedrock-server.zip -d /bedrock-server && rm bedrock-server.zip
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        libcurl4 \
+        libssl1.1 \
+        nano \
+        tzdata \
+        unzip \
+        wget && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.12.0.28.zip -qO bedrock-server.zip && \
+    unzip bedrock-server.zip -d /bedrock-server && \
+    rm bedrock-server.zip
 
 # Set standard timezone
 ENV TZ=Europe/Berlin
@@ -31,12 +42,8 @@ RUN find . -name '*.sh' -type f -maxdepth 1 | xargs chmod +x && \
     ln -sfb /data/config/server.properties server.properties && \
     ln -sfb /data/config/whitelist.json whitelist.json
 
-# Expose Ports for IPv4
-EXPOSE 19132/tcp
+# Expose Ports for IPv4 and IPv6
 EXPOSE 19132/udp
-
-# Expose Ports for IPv6
-EXPOSE 19133/tcp
 EXPOSE 19133/udp
 
 ENV LD_LIBRARY_PATH=/.
