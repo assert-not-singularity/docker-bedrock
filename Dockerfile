@@ -14,7 +14,7 @@ RUN apt-get update && \
         wget && \
     rm -rf /var/lib/apt/lists/*
 
-RUN wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.16.101.01.zip -qO bedrock-server.zip && \
+RUN wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.16.200.02.zip -qO bedrock-server.zip && \
     unzip bedrock-server.zip -d /bedrock-server && \
     rm bedrock-server.zip
 
